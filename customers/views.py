@@ -56,4 +56,4 @@ class CustomerUpdateView(OwnerRequiredMixin, UpdateView):
 class CustomerDeleteView(OwnerRequiredMixin, DeleteView):
     """Контроллер удаления клиента сервиса"""
     model = Customer
-    success_url = reverse_lazy('customer:customer_list')
+    success_url = reverse_lazy('customers:customer_list')

@@ -1,26 +1,21 @@
 import random
 import string
-
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, FormView, ListView
-
 from config import settings
 from config.settings import DEFAULT_FROM_EMAIL
 from mailing.views import ManagerRequiredMixin
 from users.forms import RegisterCreationForm, UserProfileForm, PasswordResetForm, UserStatusForm
 from users.models import User
-
-
 class RegisterView(CreateView):
     """Контроллер создания пользователя"""
     model = User
     form_class = RegisterCreationForm
     template_name = 'users/register.html'
     success_url = reverse_lazy('users:check_email')
-
     def form_valid(self, form):
         user = form.save(commit=False)
         user.is_active = False
@@ -33,8 +28,6 @@ class RegisterView(CreateView):
             fail_silently=False,
         )
         return super().form_valid(form)
-
-
 def verify(request, id_user):
     user = get_object_or_404(User, id=id_user)
     if user.is_active is False:
@@ -42,27 +35,19 @@ def verify(request, id_user):
         user.save()
         return HttpResponseRedirect(reverse_lazy('users:login'))
     return HttpResponseRedirect(reverse_lazy('users:register'))
-
-
 def check_email(request):
     return render(request, 'users/check_email.html')
-
-
 class ProfileView(UpdateView):
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('mailing:home')
-
     def get_object(self, queryset=None):
         return self.request.user
-
-
 class PasswordResetView(FormView):
     model = User
     form_class = PasswordResetForm
     template_name = 'users/password_reset_form.html'
     success_url = reverse_lazy('users:login')
-
     def form_valid(self, form):
         email_form = form.cleaned_data['email']
         try:
@@ -77,7 +62,6 @@ class PasswordResetView(FormView):
         new_pass = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
         user.set_password(new_pass)
         user.save()
-
         send_mail(
             subject='Новый пароль',
             message=f'Ваш новый пароль: {new_pass}',
@@ -85,21 +69,18 @@ class PasswordResetView(FormView):
             recipient_list=[user.emails],
             fail_silently=False,
         )
-
         return super().form_valid(form)
-
-
 class UserUpdateView(ManagerRequiredMixin, UpdateView):
     """Контроллер редактирования пользователя"""
     model = User
     form_class = UserStatusForm
     success_url = reverse_lazy('users:user_list')
 
+
 class UserListView(ListView):
     model = User
     paginate_by = 9
     ordering = ['-id']
-
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_anonymous:
             return redirect('mailing:access_error')

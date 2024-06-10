@@ -8,7 +8,7 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Mailing
-        exclude = ('created_by',)
+        exclude = ('owner',)
 
 
 class MailingManagerForm(StyleFormMixin, forms.ModelForm):
