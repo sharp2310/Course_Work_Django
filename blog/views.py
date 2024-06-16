@@ -4,6 +4,7 @@ from blog.models import Article
 
 class ArticleListView(ListView):
     """Контроллер просмотра списка статей"""
+
     model = Article
     paginate_by = 6
 

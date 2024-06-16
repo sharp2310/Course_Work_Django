@@ -20,14 +20,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('mailing.urls', namespace='mailing')),
-    path('customers/', include('customers.urls', namespace='customers')),
-    path('mail_messages/', include('mail_messages.urls', namespace='mail_messages')),
-    path('blog/', include('blog.urls', namespace='blog')),
-    path('users/', include('users.urls', namespace='users')),
+    path("admin/", admin.site.urls),
+    path("", include("mailing.urls", namespace="mailing")),
+    path("customers/", include("customers.urls", namespace="customers")),
+    path("mail_messages/", include("mail_messages.urls", namespace="mail_messages")),
+    path("blog/", include("blog.urls", namespace="blog")),
+    path("users/", include("users.urls", namespace="users")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
