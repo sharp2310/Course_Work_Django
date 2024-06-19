@@ -8,4 +8,4 @@ class MessageForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Message
-        exclude = ('owner',)
+        exclude = ("owner",)

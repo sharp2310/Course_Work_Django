@@ -1,16 +1,24 @@
 import logging
+
 from django.conf import settings
+
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 from django.core.management.base import BaseCommand
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
+
 from mailing.services import send_mails
+
 logger = logging.getLogger(__name__)
+
+
 def my_job():
     # Your job processing logic here...
     send_mails()
+
+
 # The `close_old_connections` decorator ensures that database connections, that have become
 # unusable or are obsolete, are closed before and after your job has run. You should use it
 # to wrap any jobs that you schedule that access the Django database in any way.
@@ -20,15 +28,20 @@ def delete_old_job_executions(max_age=604_800):
     This job deletes APScheduler job execution entries older than `max_age` from the database.
     It helps to prevent the database from filling up with old historical records that are no
     longer useful.
+
     :param max_age: The maximum length of time to retain historical job execution records.
                     Defaults to 7 days.
     """
     DjangoJobExecution.objects.delete_old_job_executions(max_age)
+
+
 class Command(BaseCommand):
     help = "Runs APScheduler."
+
     def handle(self, *args, **options):
         scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
         scheduler.add_jobstore(DjangoJobStore(), "default")
+
         scheduler.add_job(
             my_job,
             trigger=CronTrigger(second="*/30"),  # Every 10 seconds
@@ -37,6 +50,7 @@ class Command(BaseCommand):
             replace_existing=True,
         )
         logger.info("Added job 'my_job'.")
+
         scheduler.add_job(
             delete_old_job_executions,
             trigger=CronTrigger(
