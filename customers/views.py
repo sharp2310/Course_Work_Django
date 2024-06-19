@@ -1,4 +1,10 @@
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+)
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
@@ -10,13 +16,14 @@ from mailing.views import ManagerOrOwnerRequiredMixin, OwnerRequiredMixin
 
 class CustomerListView(ListView):
     """Контроллер создания клиента сервиса"""
+
     model = Customer
     paginate_by = 15
-    ordering = ['-id']
+    ordering = ["-id"]
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_anonymous:
-            return redirect('mailing:access_error')
+            return redirect("mailing:access_error")
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self, *args, **kwargs):
@@ -28,9 +35,10 @@ class CustomerListView(ListView):
 
 class CustomerCreateView(LoginRequiredMixin, CreateView):
     """Контроллер просмотра списка клиентов сервиса"""
+
     model = Customer
     form_class = CustomerForm
-    success_url = reverse_lazy('customers:customer_list')
+    success_url = reverse_lazy("customers:customer_list")
 
     def form_valid(self, form):
         if form.is_valid():
@@ -43,17 +51,20 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
 
 class CustomerDetailView(ManagerOrOwnerRequiredMixin, DetailView):
     """Контроллер просмотра отдельного клиента сервиса"""
+
     model = Customer
 
 
 class CustomerUpdateView(OwnerRequiredMixin, UpdateView):
     """Контроллер редактирования клиента сервиса"""
+
     model = Customer
     form_class = CustomerForm
-    success_url = reverse_lazy('customers:customer_list')
+    success_url = reverse_lazy("customers:customer_list")
 
 
 class CustomerDeleteView(OwnerRequiredMixin, DeleteView):
     """Контроллер удаления клиента сервиса"""
+
     model = Customer
-    success_url = reverse_lazy('customers:customer_list')
+    success_url = reverse_lazy("customers:customer_list")

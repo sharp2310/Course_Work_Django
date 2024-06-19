@@ -8,46 +8,50 @@
 <div class="container">
     {% if not user.is_manager %}
     <div class="btn-group">
-    <a href="{% url 'mail_messages:message_create' %}"
-    class="btn btn-block btn-outline-primary">Добавить новое</a>
+        <a href="{% url 'mail_messages:message_create' %}"
+           class="btn btn-block btn-outline-primary">Добавить новое</a>
     </div>
     {% endif %}
+</div>
 
 <div class="container">
-   <br><table class="table">
-   <thead>
-       <tr>
-       <th scope="col">id</th>
-       <th scope="col">Тема</th>
-       <th scope="col">Текст</th>
-       <th scope="col">Детали</th>
-       </tr>
-   </thead>
-   {% for object in object_list %}
-   <tbody>
-      <tr>
-      <th scope="row">{{ object.pk}}</th>
-      <td>{{ object.subject}}</td>
-      <td>{{ object.text|truncatechars:100}}</td>
-      <td>
-          <a href="{% url 'mail_messages:message_detail' object.pk %}" class="btn btn-outline-warning">Подробнее</a>
-      </td>
-      </tr>
-   </tbody>
-   {% endfor %}
-   </table>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Тема</th>
+            <th scope="col">Текст</th>
+            <th scope="col">Детали</th>
+        </tr>
+        </thead>
+        {% for object in object_list %}
+        <tbody>
+        <tr>
+            <th scope="row">{{ object.pk}}</th>
+            <td>{{ object.subject}}</td>
+            <td>{{ object.text|truncatechars:100}}</td>
+            <td>
+                <a href="{% url 'mail_messages:message_detail' object.pk %}"
+                   class="btn btn-outline-warning">Подробнее</a>
+            </td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
 
 
-<div id="pages" align="center">
-   {% if page_obj.has_previous %}
-       <a href="?page={{ page.obj.previous_page_number }}">Предыдущая</a>
-   {% endif %}
-   <span class="current">
+    <div id="pages" align="center">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page.obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+        <span class="current">
        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
    </span>
-   {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
-   {% endif %}
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        {% endif %}
+    </div>
 </div>
 
 {% endblock %}

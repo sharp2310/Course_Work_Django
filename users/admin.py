@@ -1,5 +1,7 @@
 from django.contrib import admin
 from users.models import User
+
+
 @admin.action(description="Блокировать пользователя сервиса")
 def make_status(self, request, queryset):
     queryset.update(is_active=False)

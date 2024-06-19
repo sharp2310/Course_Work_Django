@@ -6,19 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("mail_messages", "0001_initial"),
+        ("customers", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="message",
+            model_name="customer",
             name="owner",
             field=models.ForeignKey(
                 blank=True,
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
                 to=settings.AUTH_USER_MODEL,
+                verbose_name="автор",
             ),
         ),
     ]

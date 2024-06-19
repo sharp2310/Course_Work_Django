@@ -1,5 +1,6 @@
 import smtplib
 from django.core.mail import send_mail
+
 from config.settings import EMAIL_HOST_USER
 import pytz
 from datetime import datetime
@@ -10,6 +11,7 @@ from config import settings
 
 MY_TIME_ZONE = pytz.timezone(settings.TIME_ZONE)
 NOW = datetime.now(MY_TIME_ZONE)
+
 
 def send_mail_func(mailing):
     """Отправляет письмо на почту клиентам из рассылки, записывает попытки рассылки"""
@@ -65,15 +67,21 @@ def send_mails():
                 elif mailing.period == Mailing.MONTHLY and delta.days >= 30:
                     send_mail_func(mailing)
                 print('Отработала отправка рассылки со статусом Запущена')
+
     print(f'Текущее время:{NOW}')
+
+
 def get_cashed_article_list():
     """Функция возвращает закешированный список статей"""
+
     key = 'articles'
     article_list = Article.objects.all()
+
     if settings.CACHE_ENABLED:
         articles = cache.get(key)
         if articles is None:
             articles = article_list
             cache.set(key, articles)
         return articles
+
     return article_list

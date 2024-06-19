@@ -1,10 +1,12 @@
 {% extends 'mailing/base.html' %}
 {% load static %}
+
 {% block content %}
 <div class="container my-5">
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-2">Сервис рассылок</h1>
     </div>
+
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card shadow-sm">
@@ -59,10 +61,12 @@
                         <a href="{% url 'mailing:mailing_create' %}" class="btn btn-block btn-outline-primary">Добавить новую</a>
                         {% endif %}
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
     <div class="my-5">
         <p class="lead fst-italic display-6 text-center">О нашем сервисе в цифрах</p>
         <div class="row text-center">
@@ -98,6 +102,7 @@
             </div>
         </div>
     </div>
+
     <div class="my-5">
         <p class="lead fst-italic display-6 text-center">Интересно знать</p>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -117,6 +122,7 @@
             {% endfor %}
         </div>
     </div>
+
     {% include 'mailing/includes/inc_under_menu.html' %}
 </div>
 {% endblock %}

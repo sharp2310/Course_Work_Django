@@ -31,6 +31,7 @@
    </table>
 
 
+
 <div id="pages" align="center">
    {% if page_obj.has_previous %}
        <a href="?page={{ page.obj.previous_page_number }}">Предыдущая</a>
@@ -41,6 +42,7 @@
    {% if page_obj.has_next %}
        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
    {% endif %}
+</div>
 </div>
 
 {% endblock %}

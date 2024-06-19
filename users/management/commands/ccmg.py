@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.management import BaseCommand
 from blog.models import Article
 
+
 class Command(BaseCommand):
     """Создание группы Контент-менеджер"""
 
