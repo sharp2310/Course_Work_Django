@@ -17,18 +17,16 @@ Including another URLconf
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import include
+
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("mailing.urls", namespace="mailing")),
-    path("customers/", include("customers.urls", namespace="customers")),
-    path("mail_messages/", include("mail_messages.urls", namespace="mail_messages")),
-    path("blog/", include("blog.urls", namespace="blog")),
+    path("", include("schedule.urls", namespace="schedule")),
     path("users/", include("users.urls", namespace="users")),
+    path("blog/", include("blog.urls", namespace="blog")),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

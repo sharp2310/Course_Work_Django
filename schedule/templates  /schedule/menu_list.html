@@ -1,0 +1,3 @@
+{% for item in users_menu %}
+<a class=" p-1 px-2 btn btn-outline-primary" href="{% url item.templates %}">{{ item.name }}</a>
+{% endfor %}

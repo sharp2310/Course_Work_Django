@@ -10,17 +10,20 @@
             {% csrf_token %}
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="card shadow-md">
                             <div class="card-body">
                                 {{ form.as_p }}
                             </div>
                             <div class="card-footer text-center">
                                 <button type="submit" class="btn btn-success btn-sm">
-                                    Подтвердить
+                                    Войти
                                 </button>
                                 <a class="btn btn-primary btn-sm" href="{% url 'schedule:home' %}">
                                     Отменить
+                                </a>
+                                <a href="{% url 'users:passwort_reset' %}" class="btn btn-link btn-sm">
+                                    Восстановить пароль
                                 </a>
                             </div>
                         </div>

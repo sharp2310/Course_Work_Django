@@ -1,21 +1,17 @@
 from django.contrib import admin
-from users.models import User
+
+from users.models import User, Company
 
 
-@admin.action(description="Блокировать пользователя сервиса")
-def make_status(self, request, queryset):
-    queryset.update(is_active=False)
-
-
+# Register your models here.
+@admin.register(User)
 class UserAdmin(admin.ModelAdmin):
+    list_display = ("pk", "email", "user_company", "is_active", "avatar")
+
+
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
-        "email",
-        "is_active",
-        "avatar",
-        "phone",
+        "pk",
+        "company_name",
     )
-    actions = [make_status]
-
-
-admin.site.register(User, UserAdmin)

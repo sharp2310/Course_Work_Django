@@ -1,6 +1,8 @@
 import django.contrib.auth.models
-import django.utils.timezone
 from django.db import migrations, models
+import django.db.models.deletion
+import django.utils.timezone
+import phonenumber_field.modelfields
 
 
 class Migration(migrations.Migration):
@@ -13,8 +15,39 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name="Company",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "company_name",
+                    models.CharField(max_length=150, verbose_name="Название компании"),
+                ),
+            ],
+            options={
+                "verbose_name": "Компания",
+                "verbose_name_plural": "Компании",
+            },
+        ),
+        migrations.CreateModel(
             name="User",
             fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("password", models.CharField(max_length=128, verbose_name="password")),
                 (
                     "last_login",
@@ -51,60 +84,38 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "is_active",
-                    models.BooleanField(
-                        default=True,
-                        help_text="Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
-                        verbose_name="active",
-                    ),
-                ),
-                (
                     "date_joined",
                     models.DateTimeField(
                         default=django.utils.timezone.now, verbose_name="date joined"
                     ),
                 ),
                 (
-                    "avatar",
-                    models.ImageField(
-                        blank=True,
-                        null=True,
-                        upload_to="users/avatars/",
-                        verbose_name="аватар",
-                    ),
+                    "email",
+                    models.EmailField(max_length=50, unique=True, verbose_name="Email"),
                 ),
                 (
                     "phone",
-                    models.CharField(
-                        blank=True, max_length=30, null=True, verbose_name="телефон"
+                    phonenumber_field.modelfields.PhoneNumberField(
+                        blank=True,
+                        max_length=128,
+                        null=True,
+                        region=None,
+                        unique=True,
+                        verbose_name="Телефон",
                     ),
                 ),
-                (
-                    "is_manager",
-                    models.BooleanField(
-                        blank=True, default=False, null=True, verbose_name="менеджер"
-                    ),
-                ),
-                (
-                    "email",
-                    models.EmailField(
-                        max_length=254, unique=True, verbose_name="почта"
-                    ),
-                ),
+                ("city", models.CharField(max_length=150, verbose_name="Город")),
                 (
                     "token",
                     models.CharField(
-                        blank=True, max_length=100, null=True, verbose_name="Токен"
+                        blank=True, max_length=200, null=True, verbose_name="Token"
                     ),
                 ),
+                ("is_active", models.BooleanField(default=False)),
                 (
-                    "id",
-                    models.IntegerField(
-                        default=0,
-                        editable=False,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="id_клиента",
+                    "avatar",
+                    models.ImageField(
+                        blank=True, null=True, upload_to="users/", verbose_name="Аватар"
                     ),
                 ),
                 (
@@ -116,6 +127,16 @@ class Migration(migrations.Migration):
                         related_query_name="user",
                         to="auth.group",
                         verbose_name="groups",
+                    ),
+                ),
+                (
+                    "user_company",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="users.company",
+                        verbose_name="Компания",
                     ),
                 ),
                 (
@@ -131,9 +152,12 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "verbose_name": "user",
-                "verbose_name_plural": "users",
-                "abstract": False,
+                "verbose_name": "Пользователь",
+                "verbose_name_plural": "Пользователи",
+                "permissions": [
+                    ("can_block", "Можно заблокировать"),
+                    ("can_view_users", "Можно просматривать пользователей"),
+                ],
             },
             managers=[
                 ("objects", django.contrib.auth.models.UserManager()),

@@ -1,3 +1,4 @@
+import datetime
 from django.db import migrations, models
 
 
@@ -9,7 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Article",
+            name="Blog",
             fields=[
                 (
                     "id",
@@ -20,26 +21,33 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("title", models.CharField(max_length=50, verbose_name="Заголовок")),
-                ("body", models.TextField(verbose_name="Текст")),
+                ("title", models.CharField(max_length=150, verbose_name="Заголовок")),
+                ("text", models.TextField(verbose_name="Содержимое статьи")),
                 (
-                    "preview",
+                    "image",
                     models.ImageField(
                         blank=True,
                         null=True,
-                        upload_to="articles/",
-                        verbose_name="Превью",
+                        upload_to="blog/",
+                        verbose_name="Картинка статьи",
                     ),
                 ),
-                ("date", models.DateField(verbose_name="дата публикации")),
                 (
-                    "views_count",
-                    models.PositiveIntegerField(default=0, verbose_name="просмотры"),
+                    "count_views",
+                    models.PositiveIntegerField(
+                        default=0, verbose_name="Количество просмотров"
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        default=datetime.datetime.now, verbose_name="Дата содания"
+                    ),
                 ),
             ],
             options={
-                "verbose_name": "статья",
-                "verbose_name_plural": "статьи",
+                "verbose_name": "Статья",
+                "verbose_name_plural": "Статьи",
             },
         ),
     ]

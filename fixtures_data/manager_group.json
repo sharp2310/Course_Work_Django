@@ -1,0 +1,131 @@
+[
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "managers",
+            "permissions": [
+                53,
+                54,
+                55,
+                56,
+                24,
+                34,
+                35,
+                37,
+                36,
+                33,
+                51,
+                52
+            ]
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 53,
+        "fields": {
+            "name": "Can add Статья",
+            "content_type": 12,
+            "codename": "add_blog"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 54,
+        "fields": {
+            "name": "Can change Статья",
+            "content_type": 12,
+            "codename": "change_blog"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 55,
+        "fields": {
+            "name": "Can delete Статья",
+            "content_type": 12,
+            "codename": "delete_blog"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 56,
+        "fields": {
+            "name": "Can view Статья",
+            "content_type": 12,
+            "codename": "view_blog"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 24,
+        "fields": {
+            "name": "Can view Клиент",
+            "content_type": 6,
+            "codename": "view_client"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 34,
+        "fields": {
+            "name": "Может отключать рассылки",
+            "content_type": 8,
+            "codename": "can_disable_newsletter"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 35,
+        "fields": {
+            "name": "Не может изменять рассылки",
+            "content_type": 8,
+            "codename": "cannot_change_newsletter"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 37,
+        "fields": {
+            "name": "Не может создавать рассылки",
+            "content_type": 8,
+            "codename": "cannot_create_newsletter"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 36,
+        "fields": {
+            "name": "Не может удалять рассылки",
+            "content_type": 8,
+            "codename": "cannot_delete_newsletter"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 33,
+        "fields": {
+            "name": "Может видеть все рассылки",
+            "content_type": 8,
+            "codename": "can_view_all_newsletter"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 51,
+        "fields": {
+            "name": "Можно заблокировать",
+            "content_type": 11,
+            "codename": "can_block"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 52,
+        "fields": {
+            "name": "Можно просматривать пользователей",
+            "content_type": 11,
+            "codename": "can_view_users"
+        }
+    }
+]
